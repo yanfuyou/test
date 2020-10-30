@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		*{margin: 0px;padding: 0px;}
+		li{list-style: none;}
+		body{
+			font-family: "楷体";
+			user-select:none;
+			background: url('1.jpg') no-repeat;
+			background-size: 100%;
+			/*background-color: red;*/
+		}
+		.section{
+			position: relative;
+			width:935px;
+			height: 460px;
+			background-color: rgba(0,0,0,.3);
+			margin:165px auto 0;
+			text-align: center;
+		}
+		.section h2{
+			height: 90px;
+			line-height: 90px;
+			font-size: 40px;
+			color:#fff;
+		}
+		.section .s-result{
+			height: 400px;
+			color: #fff;
+		}
+		.s-result .number{
+			float: left;
+			width: 895px;
+			height: 300px;
+			line-height: 300px;
+			margin-left: 20px;
+			font-size: 60px;
+			font-weight: bold;
+		}
+		.btn{
+			position:absolute;
+			left: 50%;
+			margin-left: -161px;
+			bottom: -40px;
+			width: 323px;
+			height: 81px;
+			border-radius: 30px;
+			background-color: #000;
+			cursor:pointer;
+		}
+		.btn p{
+			line-height: 81px;
+			font-size: 50px;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="section">
+		<h2>看看谁最幸运！！</h2>
+		<div class="s-result">
+		</div>
+		<div class="btn">
+			<p>点 击 抽 取</p>
+		</div>
+	</div>
+	<script>
+		var oBtn = document.getElementsByClassName('btn')[0];
+		var oResult = document.getElementsByClassName('s-result')[0];
+		var arrName = ['恭喜你中奖啦！','啊哦，你没有中奖哦!','恭喜你中奖啦！','恭喜你中奖啦！','啊哦，你没有中奖哦!','啊哦，你没有中奖哦!','啊哦，你没有中奖哦!','啊哦，你没有中奖哦!']; 		//抽签的内容
+		var step = 1;
+		var cnt = 1;
+		var flag = true;
+		oBtn.onclick = function (){
+			if(flag){
+				step = 1;
+				creatName();
+				flag = false;
+			}else{
+				var d =  document.getElementsByClassName('number')[0];
+				oResult.removeChild(d);
+				step = 1;
+				creatName();
+			}
+		}
+		function getName(){
+			var num = Math.floor(Math.random()*(arrName.length-1));
+			var n = arrName[num];
+			arrName.splice(num,1);
+			return n;
+		}
+		function creatName(){
+			if(step > cnt){
+				return null;
+			}
+			step++;
+			
+			var oDiv = document.createElement('div');
+			oDiv.className = 'number';
+			
+			oResult.appendChild(oDiv);
+			
+			var dis = 1;
+			var maxDis = 30;
+			var mySet = setInterval(function(){
+				dis++;
+				if(dis > maxDis){
+					oDiv.innerHTML = getName();
+					clearInterval(mySet);
+					creatName();
+					return null;
+				}
+				oDiv.innerHTML = arrName[Math.floor(Math.random()*(arrName.length-1))];
+			},50);
+		}
+	</script>
+</body>
+</html>
